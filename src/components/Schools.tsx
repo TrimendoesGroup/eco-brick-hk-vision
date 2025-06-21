@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
@@ -78,7 +77,7 @@ const Schools = () => {
                   />
                 </div>
               </div>
-              <CardContent className="p-6">
+              <CardContent className="p-6 bg-white">
                 <h3 className="text-xl font-bold text-gray-900 mb-4">
                   {school.name[i18n.language as keyof typeof school.name]}
                 </h3>

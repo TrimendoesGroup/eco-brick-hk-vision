@@ -7,8 +7,8 @@ interface Organization {
   id: string;
   name: { en: string; zh: string };
   logo_url: string;
-  organization_type: string;
   contribution: { en: string; zh: string };
+  organization_type: string;
   website_url?: string;
 }
 
@@ -33,65 +33,58 @@ const Organizations = () => {
     }
   });
 
-  const hostingOrgs = organizations.filter(org => org.organization_type === 'hosting');
-  const supportingOrgs = organizations.filter(org => org.organization_type === 'supporting');
+  const partners = organizations.filter(org => org.organization_type === 'partner');
+  const supporters = organizations.filter(org => org.organization_type === 'supporter');
+
+  const renderOrganizationGrid = (orgs: Organization[]) => (
+    <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-8">
+      {orgs.map((org) => (
+        <div
+          key={org.id}
+          className="p-6 rounded-lg border border-gray-200 hover:shadow-lg transition-all duration-300 bg-white text-center group hover:-translate-y-2"
+        >
+          <div className="mb-4">
+            <img
+              src={org.logo_url}
+              alt={org.name[i18n.language as keyof typeof org.name]}
+              className="h-16 mx-auto object-contain group-hover:scale-110 transition-transform duration-300"
+            />
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            {org.name[i18n.language as keyof typeof org.name]}
+          </h3>
+          <p className="text-sm text-gray-600">
+            {org.contribution[i18n.language as keyof typeof org.contribution]}
+          </p>
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Partners</h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-6">{t('organizations.title')}</h2>
         </div>
 
-        {/* Hosting Organizations */}
-        {hostingOrgs.length > 0 && (
+        {/* Partners Section */}
+        {partners.length > 0 && (
           <div className="mb-16">
-            <h3 className="text-2xl font-semibold text-gray-900 mb-8 text-center">Hosting Organizations</h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {hostingOrgs.map((org) => (
-                <div key={org.id} className="text-center group">
-                  <div className="mb-4 flex justify-center">
-                    <img 
-                      src={org.logo_url}
-                      alt={org.name[i18n.language as keyof typeof org.name]}
-                      className="h-20 w-auto object-contain group-hover:scale-110 transition-transform duration-300"
-                    />
-                  </div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">
-                    {org.name[i18n.language as keyof typeof org.name]}
-                  </h4>
-                  <p className="text-gray-600 text-sm">
-                    {org.contribution[i18n.language as keyof typeof org.contribution]}
-                  </p>
-                </div>
-              ))}
-            </div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
+              {t('organizations.partners', 'Our Partners')}
+            </h3>
+            {renderOrganizationGrid(partners)}
           </div>
         )}
 
-        {/* Supporting Organizations */}
-        {supportingOrgs.length > 0 && (
+        {/* Supporters Section */}
+        {supporters.length > 0 && (
           <div>
-            <h3 className="text-2xl font-semibold text-gray-900 mb-8 text-center">Supporting Organizations</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
-              {supportingOrgs.map((org) => (
-                <div key={org.id} className="text-center group">
-                  <div className="mb-3 flex justify-center">
-                    <img 
-                      src={org.logo_url}
-                      alt={org.name[i18n.language as keyof typeof org.name]}
-                      className="h-16 w-auto object-contain group-hover:scale-110 transition-transform duration-300"
-                    />
-                  </div>
-                  <h4 className="text-sm font-medium text-gray-900 mb-1">
-                    {org.name[i18n.language as keyof typeof org.name]}
-                  </h4>
-                  <p className="text-gray-600 text-xs">
-                    {org.contribution[i18n.language as keyof typeof org.contribution]}
-                  </p>
-                </div>
-              ))}
-            </div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
+              {t('organizations.supporters', 'Our Supporters')}
+            </h3>
+            {renderOrganizationGrid(supporters)}
           </div>
         )}
       </div>

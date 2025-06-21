@@ -23,8 +23,9 @@ interface Album {
 
 const PhotoGallery = () => {
   const { t, i18n } = useTranslation();
-  const [selectedAlbum, setSelectedAlbum] = useState<Album | null>(null);
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null);
+  const [allPhotos, setAllPhotos] = useState<Photo[]>([]);
 
   const { data: albums = [] } = useQuery({
     queryKey: ['photo-albums-gallery'],
@@ -76,8 +77,11 @@ const PhotoGallery = () => {
     return album.description?.[lang] || '';
   };
 
-  const openAlbum = (album: Album) => {
-    setSelectedAlbum(album);
+  const openGallery = () => {
+    // Collect all photos from all albums
+    const photos = albums.flatMap(album => album.album_photos);
+    setAllPhotos(photos);
+    setIsGalleryOpen(true);
     setSelectedPhoto(null);
   };
 
@@ -89,13 +93,13 @@ const PhotoGallery = () => {
     setSelectedPhoto(null);
   };
 
-  const closeAlbum = () => {
-    setSelectedAlbum(null);
+  const closeGallery = () => {
+    setIsGalleryOpen(false);
     setSelectedPhoto(null);
   };
 
   const nextPhoto = () => {
-    if (selectedPhoto !== null && selectedAlbum && selectedPhoto < selectedAlbum.album_photos.length - 1) {
+    if (selectedPhoto !== null && selectedPhoto < allPhotos.length - 1) {
       setSelectedPhoto(selectedPhoto + 1);
     }
   };
@@ -111,14 +115,20 @@ const PhotoGallery = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-6">{t('gallery.title')}</h2>
+          <Button 
+            onClick={openGallery}
+            className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg"
+          >
+            View Photo Gallery
+          </Button>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {albums.map((album) => (
             <Card 
               key={album.id} 
-              className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer hover:-translate-y-2"
-              onClick={() => openAlbum(album)}
+              className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer hover:-translate-y-2 bg-white"
+              onClick={openGallery}
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img 
@@ -127,7 +137,7 @@ const PhotoGallery = () => {
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                 />
               </div>
-              <CardContent className="p-6">
+              <CardContent className="p-6 bg-white">
                 <h3 className="text-xl font-bold text-gray-900 mb-2">
                   {getAlbumName(album)}
                 </h3>
@@ -142,21 +152,16 @@ const PhotoGallery = () => {
           ))}
         </div>
 
-        {/* Album View */}
-        {selectedAlbum && (
+        {/* Full Screen Gallery */}
+        {isGalleryOpen && (
           <div className="fixed inset-0 bg-white z-50 overflow-y-auto">
             <div className="container mx-auto px-4 py-8">
               <div className="flex justify-between items-center mb-8">
-                <div>
-                  <h2 className="text-3xl font-bold text-gray-900 mb-2">
-                    {getAlbumName(selectedAlbum)}
-                  </h2>
-                  <p className="text-gray-600">
-                    {getAlbumDescription(selectedAlbum)}
-                  </p>
-                </div>
+                <h2 className="text-3xl font-bold text-gray-900">
+                  Photo Gallery
+                </h2>
                 <Button
-                  onClick={closeAlbum}
+                  onClick={closeGallery}
                   variant="ghost"
                   className="text-gray-500 hover:text-gray-700"
                 >
@@ -166,7 +171,7 @@ const PhotoGallery = () => {
 
               {/* Masonry Layout */}
               <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-                {selectedAlbum.album_photos.map((photo, index) => (
+                {allPhotos.map((photo, index) => (
                   <div key={photo.id} className="break-inside-avoid mb-4">
                     <img
                       src={photo.photo_url}
@@ -182,7 +187,7 @@ const PhotoGallery = () => {
         )}
 
         {/* Lightbox */}
-        {selectedPhoto !== null && selectedAlbum && (
+        {selectedPhoto !== null && (
           <div className="fixed inset-0 bg-black/90 z-[60] flex items-center justify-center p-4">
             <div className="relative max-w-4xl w-full h-full flex items-center justify-center">
               <Button
@@ -206,21 +211,21 @@ const PhotoGallery = () => {
                 onClick={nextPhoto}
                 variant="ghost"
                 className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/10 disabled:opacity-50"
-                disabled={selectedPhoto === selectedAlbum.album_photos.length - 1}
+                disabled={selectedPhoto === allPhotos.length - 1}
               >
                 <ChevronRight className="h-8 w-8" />
               </Button>
               
               <img
-                src={selectedAlbum.album_photos[selectedPhoto]?.photo_url}
-                alt={getPhotoCaption(selectedAlbum.album_photos[selectedPhoto]) || 'Photo'}
+                src={allPhotos[selectedPhoto]?.photo_url}
+                alt={getPhotoCaption(allPhotos[selectedPhoto]) || 'Photo'}
                 className="max-w-full max-h-full object-contain"
               />
               
-              {selectedAlbum.album_photos[selectedPhoto]?.caption && (
+              {allPhotos[selectedPhoto]?.caption && (
                 <div className="absolute bottom-4 left-4 right-4 text-center">
                   <p className="text-white bg-black/50 px-4 py-2 rounded-lg backdrop-blur-sm">
-                    {getPhotoCaption(selectedAlbum.album_photos[selectedPhoto])}
+                    {getPhotoCaption(allPhotos[selectedPhoto])}
                   </p>
                 </div>
               )}

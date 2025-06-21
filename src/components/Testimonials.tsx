@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Play } from "lucide-react";
+import YouTubePlayer from "./YouTubePlayer";
 
 interface Testimonial {
   id: string;
@@ -21,6 +22,7 @@ interface Testimonial {
 const Testimonials = () => {
   const { t, i18n } = useTranslation();
   const [visibleCount, setVisibleCount] = useState(6);
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
   const { data: testimonials = [] } = useQuery({
     queryKey: ['testimonials'],
@@ -52,7 +54,11 @@ const Testimonials = () => {
   };
 
   const handleVideoPlay = (videoUrl: string) => {
-    window.open(videoUrl, '_blank');
+    setSelectedVideo(videoUrl);
+  };
+
+  const closeVideo = () => {
+    setSelectedVideo(null);
   };
 
   const loadMore = () => {
@@ -90,7 +96,7 @@ const Testimonials = () => {
                   </span>
                 </div>
               </div>
-              <CardContent className="p-6">
+              <CardContent className="p-6 bg-white">
                 <div className="mb-4">
                   <h3 className="text-lg font-bold text-gray-900">
                     {testimonial.name[i18n.language as keyof typeof testimonial.name]}
@@ -122,6 +128,10 @@ const Testimonials = () => {
               {t('testimonials.loadMore', 'View More')}
             </Button>
           </div>
+        )}
+
+        {selectedVideo && (
+          <YouTubePlayer videoUrl={selectedVideo} onClose={closeVideo} />
         )}
       </div>
     </section>

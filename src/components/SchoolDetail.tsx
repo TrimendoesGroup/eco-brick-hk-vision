@@ -53,7 +53,7 @@ const SchoolDetail = ({ school, photos, onClose }: SchoolDetailProps) => {
           </div>
         </div>
 
-        <CardContent className="p-8">
+        <CardContent className="p-8 bg-white">
           {/* Introduction and Metrics */}
           <div className="mb-8">
             <div className="grid lg:grid-cols-3 gap-8">
