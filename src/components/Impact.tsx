@@ -27,7 +27,10 @@ const Impact = () => {
         .order('order_index');
       
       if (error) throw error;
-      return data as ImpactStat[];
+      return data.map(stat => ({
+        ...stat,
+        unit: stat.unit as { en: string; zh: string }
+      })) as ImpactStat[];
     }
   });
 

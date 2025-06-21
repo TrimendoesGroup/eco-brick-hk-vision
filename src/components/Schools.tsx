@@ -34,7 +34,11 @@ const Schools = () => {
         .order('order_index');
       
       if (error) throw error;
-      return data as School[];
+      return data.map(school => ({
+        ...school,
+        name: school.name as { en: string; zh: string },
+        introduction: school.introduction as { en: string; zh: string }
+      })) as School[];
     }
   });
 

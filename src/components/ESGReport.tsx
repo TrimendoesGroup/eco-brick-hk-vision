@@ -1,40 +1,45 @@
 
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-const ESGReport = () => {
-  const { t } = useTranslation();
+interface ESGHighlight {
+  id: string;
+  category: { en: string; zh: string };
+  metrics: Array<{
+    label: { en: string; zh: string };
+    value: string;
+    color: string;
+  }>;
+  order_index: number;
+}
 
-  const highlights = [
-    {
-      category: "Environmental",
-      categoryZh: "環境",
-      metrics: [
-        { label: "CO2 Reduction", labelZh: "碳減排", value: "2.5 tons", color: "text-green-600" },
-        { label: "Waste Diverted", labelZh: "廢物轉化", value: "12,547 bottles", color: "text-blue-600" },
-        { label: "Energy Saved", labelZh: "節約能源", value: "1,250 kWh", color: "text-emerald-600" }
-      ]
-    },
-    {
-      category: "Social",
-      categoryZh: "社會",
-      metrics: [
-        { label: "Students Engaged", labelZh: "參與學生", value: "2,340", color: "text-purple-600" },
-        { label: "Teachers Trained", labelZh: "培訓教師", value: "85", color: "text-indigo-600" },
-        { label: "Community Outreach", labelZh: "社區外展", value: "15 events", color: "text-pink-600" }
-      ]
-    },
-    {
-      category: "Governance", 
-      categoryZh: "管治",
-      metrics: [
-        { label: "Partner Schools", labelZh: "夥伴學校", value: "5", color: "text-orange-600" },
-        { label: "Compliance Rate", labelZh: "合規率", value: "100%", color: "text-red-600" },
-        { label: "Transparency Score", labelZh: "透明度評分", value: "95/100", color: "text-teal-600" }
-      ]
+const ESGReport = () => {
+  const { t, i18n } = useTranslation();
+
+  const { data: highlights = [] } = useQuery({
+    queryKey: ['esg-highlights'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('esg_highlights')
+        .select('*')
+        .eq('is_active', true)
+        .order('order_index');
+      
+      if (error) throw error;
+      return data.map(highlight => ({
+        ...highlight,
+        category: highlight.category as { en: string; zh: string },
+        metrics: highlight.metrics as Array<{
+          label: { en: string; zh: string };
+          value: string;
+          color: string;
+        }>
+      })) as ESGHighlight[];
     }
-  ];
+  });
 
   const sdgGoals = [
     { number: 3, title: "Good Health and Well-being", titleZh: "良好健康與福祉" },
@@ -61,36 +66,38 @@ const ESGReport = () => {
         </div>
 
         {/* ESG Highlights */}
-        <div className="mb-16">
-          <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">{t('report.highlights')}</h3>
-          <div className="grid lg:grid-cols-3 gap-8">
-            {highlights.map((category, index) => (
-              <Card key={index} className="bg-white border-0 shadow-lg">
-                <CardContent className="p-8">
-                  <div className="text-center mb-6">
-                    <h4 className="text-2xl font-bold text-gray-900 mb-2">
-                      {category.category}
-                    </h4>
-                    <p className="text-gray-600">{category.categoryZh}</p>
-                  </div>
-                  <div className="space-y-4">
-                    {category.metrics.map((metric, metricIndex) => (
-                      <div key={metricIndex} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                        <div>
-                          <div className="font-semibold text-gray-900">{metric.label}</div>
-                          <div className="text-sm text-gray-600">{metric.labelZh}</div>
+        {highlights.length > 0 && (
+          <div className="mb-16">
+            <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">{t('report.highlights')}</h3>
+            <div className="grid lg:grid-cols-3 gap-8">
+              {highlights.map((category, index) => (
+                <Card key={category.id} className="bg-white border-0 shadow-lg">
+                  <CardContent className="p-8">
+                    <div className="text-center mb-6">
+                      <h4 className="text-2xl font-bold text-gray-900 mb-2">
+                        {category.category[i18n.language as keyof typeof category.category]}
+                      </h4>
+                    </div>
+                    <div className="space-y-4">
+                      {category.metrics.map((metric, metricIndex) => (
+                        <div key={metricIndex} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                          <div>
+                            <div className="font-semibold text-gray-900">
+                              {metric.label[i18n.language as keyof typeof metric.label]}
+                            </div>
+                          </div>
+                          <div className={`text-xl font-bold ${metric.color}`}>
+                            {metric.value}
+                          </div>
                         </div>
-                        <div className={`text-xl font-bold ${metric.color}`}>
-                          {metric.value}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* SDG Impact */}
         <div>
@@ -104,11 +111,8 @@ const ESGReport = () => {
                     {goal.number}
                   </div>
                   <h5 className="text-sm font-semibold text-gray-900 mb-1 leading-tight">
-                    {goal.title}
+                    {i18n.language === 'en' ? goal.title : goal.titleZh}
                   </h5>
-                  <p className="text-xs text-gray-600 leading-tight">
-                    {goal.titleZh}
-                  </p>
                 </CardContent>
               </Card>
             ))}

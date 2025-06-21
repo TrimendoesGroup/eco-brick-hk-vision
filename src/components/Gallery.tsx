@@ -36,6 +36,8 @@ const Gallery = () => {
       
       return albumsData.map(album => ({
         ...album,
+        title: album.title as { en: string; zh: string },
+        subtitle: album.subtitle as { en: string; zh: string } | undefined,
         photos: album.album_photos?.sort((a: any, b: any) => a.order_index - b.order_index) || []
       })) as PhotoAlbum[];
     }

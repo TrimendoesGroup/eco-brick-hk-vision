@@ -26,7 +26,11 @@ const Organizations = () => {
         .order('order_index');
       
       if (error) throw error;
-      return data as Organization[];
+      return data.map(org => ({
+        ...org,
+        name: org.name as { en: string; zh: string },
+        contribution: org.contribution as { en: string; zh: string }
+      })) as Organization[];
     }
   });
 

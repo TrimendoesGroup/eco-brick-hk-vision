@@ -32,7 +32,13 @@ const Testimonials = () => {
         .order('order_index');
       
       if (error) throw error;
-      return data as Testimonial[];
+      return data.map(testimonial => ({
+        ...testimonial,
+        name: testimonial.name as { en: string; zh: string },
+        role: testimonial.role as { en: string; zh: string },
+        organization: testimonial.organization as { en: string; zh: string } | undefined,
+        quote: testimonial.quote as { en: string; zh: string }
+      })) as Testimonial[];
     }
   });
 

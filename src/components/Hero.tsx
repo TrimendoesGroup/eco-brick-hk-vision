@@ -28,7 +28,12 @@ const Hero = () => {
         .order('order_index');
       
       if (error) throw error;
-      return data as Banner[];
+      return data.map(banner => ({
+        ...banner,
+        title: banner.title as { en: string; zh: string },
+        subtitle: banner.subtitle as { en: string; zh: string },
+        description: banner.description as { en: string; zh: string }
+      })) as Banner[];
     }
   });
 
