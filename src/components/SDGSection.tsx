@@ -62,19 +62,13 @@ const SDGSection = () => {
           {sdgGoals.map((goal, index) => (
             <Card key={index} className="group cursor-pointer border-blue-200 hover:border-blue-400 transition-all duration-300 hover:shadow-lg">
               <CardContent className="p-4 text-center">
-                {goal.number === 17 ? (
-                  <div className="w-16 h-16 mx-auto mb-3 rounded-full overflow-hidden group-hover:scale-110 transition-transform duration-300">
-                    <img 
-                      src={goal.image} 
-                      alt={i18n.language === 'en' ? goal.title : goal.titleZh}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                ) : (
-                  <div className="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-blue-500 to-green-500 rounded-full flex items-center justify-center text-white font-bold text-lg group-hover:scale-110 transition-transform duration-300">
-                    {goal.number}
-                  </div>
-                )}
+                <div className="w-16 h-16 mx-auto mb-3 rounded-full overflow-hidden group-hover:scale-110 transition-transform duration-300">
+                  <img 
+                    src={goal.image} 
+                    alt={i18n.language === 'en' ? goal.title : goal.titleZh}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
                 <h5 className="text-sm font-semibold text-gray-900 mb-1 leading-tight">
                   {i18n.language === 'en' ? goal.title : goal.titleZh}
                 </h5>
