@@ -36,7 +36,7 @@ const Hero = () => {
     if (banners.length > 1) {
       const interval = setInterval(() => {
         setCurrentSlide((prev) => (prev + 1) % banners.length);
-      }, 5000);
+      }, 3500);
       return () => clearInterval(interval);
     }
   }, [banners.length]);
