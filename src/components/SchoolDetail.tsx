@@ -78,17 +78,16 @@ const SchoolDetail = ({ school, photos, onClose }: SchoolDetailProps) => {
             </div>
           </div>
 
-          {/* Photo Gallery */}
+          {/* Masonry Photo Gallery */}
           {photos.length > 0 && (
             <div>
-              <h3 className="text-2xl font-semibold mb-6 text-gray-900">School Gallery</h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
                 {photos.map((photo) => (
-                  <div key={photo.id} className="group cursor-pointer">
+                  <div key={photo.id} className="break-inside-avoid mb-4">
                     <img
                       src={photo.photo_url}
                       alt="School activity"
-                      className="w-full h-32 object-cover rounded-lg hover:scale-105 transition-transform duration-300 shadow-md"
+                      className="w-full rounded-lg hover:scale-105 transition-transform duration-300 shadow-md cursor-pointer"
                     />
                   </div>
                 ))}

@@ -55,7 +55,7 @@ const Schools = () => {
   };
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-6">{t('schools.title')}</h2>
@@ -78,11 +78,11 @@ const Schools = () => {
                   />
                 </div>
               </div>
-              <CardContent className="p-6 relative">
+              <CardContent className="p-6">
                 <h3 className="text-xl font-bold text-gray-900 mb-4">
                   {school.name[i18n.language as keyof typeof school.name]}
                 </h3>
-                <div className="grid grid-cols-2 gap-4 mb-6">
+                <div className="grid grid-cols-2 gap-4 mb-4">
                   <div className="text-center p-3 bg-blue-50 rounded-lg">
                     <div className="text-lg font-bold text-blue-600">{school.students_participated}</div>
                     <div className="text-xs text-blue-800">Students</div>
@@ -92,13 +92,15 @@ const Schools = () => {
                     <div className="text-xs text-green-800">Bottles</div>
                   </div>
                 </div>
-                <Button 
-                  onClick={() => handleSchoolClick(school)}
-                  variant="ghost"
-                  className="absolute bottom-4 right-4 w-10 h-10 p-0 rounded-full bg-green-100 hover:bg-green-200 text-green-600"
-                >
-                  <ArrowRight className="h-5 w-5" />
-                </Button>
+                <div className="text-center">
+                  <Button 
+                    onClick={() => handleSchoolClick(school)}
+                    variant="ghost"
+                    className="w-10 h-10 p-0 rounded-full bg-green-100 hover:bg-green-200 text-green-600"
+                  >
+                    <ArrowRight className="h-5 w-5" />
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           ))}

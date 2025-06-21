@@ -225,8 +225,10 @@ export type Database = {
         Row: {
           cover_image_url: string
           created_at: string
+          description: Json | null
           id: string
           is_active: boolean
+          name: Json | null
           order_index: number
           subtitle: Json | null
           title: Json
@@ -235,8 +237,10 @@ export type Database = {
         Insert: {
           cover_image_url: string
           created_at?: string
+          description?: Json | null
           id?: string
           is_active?: boolean
+          name?: Json | null
           order_index?: number
           subtitle?: Json | null
           title: Json
@@ -245,8 +249,10 @@ export type Database = {
         Update: {
           cover_image_url?: string
           created_at?: string
+          description?: Json | null
           id?: string
           is_active?: boolean
+          name?: Json | null
           order_index?: number
           subtitle?: Json | null
           title?: Json

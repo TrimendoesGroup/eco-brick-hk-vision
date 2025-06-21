@@ -60,7 +60,7 @@ const Testimonials = () => {
   };
 
   return (
-    <section id="testimonials" className="py-20 bg-gray-50">
+    <section id="testimonials" className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-6">{t('testimonials.title')}</h2>
@@ -119,7 +119,7 @@ const Testimonials = () => {
               variant="outline"
               className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white px-8 py-3"
             >
-              {t('testimonials.loadMore', 'Load More')}
+              {t('testimonials.loadMore', 'View More')}
             </Button>
           </div>
         )}
