@@ -1,8 +1,7 @@
-
 import { useTranslation } from "react-i18next";
 
 const SDGSection = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const sdgGoals = [
     { number: 3, title: "Good Health and Well-being", titleZh: "良好健康與福祉", image: "https://sdgs.un.org/sites/default/files/goals/E_SDG_Icons-03.jpg" },
