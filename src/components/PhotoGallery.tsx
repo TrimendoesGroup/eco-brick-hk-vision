@@ -138,7 +138,7 @@ const PhotoGallery = () => {
               {allPhotos[selectedPhoto]?.caption && (
                 <div className="absolute bottom-4 left-4 right-4 text-center">
                   <p className="text-white bg-black/50 px-4 py-2 rounded-lg backdrop-blur-sm">
-                    {allPhotos[selectedPhoto].caption[i18n.language as keyof typeof allPhotos[selectedPhoto].caption]}
+                    {allPhotos[selectedPhoto].caption?.[i18n.language as keyof typeof allPhotos[selectedPhoto].caption]}
                   </p>
                 </div>
               )}
