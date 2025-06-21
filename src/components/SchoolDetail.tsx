@@ -25,12 +25,9 @@ interface SchoolDetailProps {
 const SchoolDetail = ({ school, photos, onClose }: SchoolDetailProps) => {
   const { t, i18n } = useTranslation();
 
-  const constructionPhotos = photos.filter(p => p.photo_type === 'construction');
-  const generalPhotos = photos.filter(p => p.photo_type === 'general');
-
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 overflow-y-auto">
-      <Card className="max-w-6xl w-full max-h-[90vh] overflow-y-auto">
+      <Card className="max-w-6xl w-full max-h-[90vh] overflow-y-auto bg-white">
         <div className="relative">
           <img 
             src={school.banner_image_url}
@@ -40,7 +37,7 @@ const SchoolDetail = ({ school, photos, onClose }: SchoolDetailProps) => {
           <Button
             onClick={onClose}
             variant="ghost"
-            className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 text-white"
+            className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm"
           >
             <X className="h-6 w-6" />
           </Button>
@@ -48,7 +45,7 @@ const SchoolDetail = ({ school, photos, onClose }: SchoolDetailProps) => {
             <img 
               src={school.logo_url}
               alt="School logo"
-              className="w-16 h-16 rounded-full bg-white p-2"
+              className="w-16 h-16 rounded-full bg-white p-2 shadow-lg"
             />
             <h2 className="text-3xl font-bold text-white drop-shadow-lg">
               {school.name[i18n.language as keyof typeof school.name]}
@@ -57,66 +54,43 @@ const SchoolDetail = ({ school, photos, onClose }: SchoolDetailProps) => {
         </div>
 
         <CardContent className="p-8">
-          <div className="grid md:grid-cols-2 gap-8 mb-8">
-            <div>
-              <h3 className="text-2xl font-semibold mb-4">Introduction</h3>
-              <p className="text-gray-600 leading-relaxed">
-                {school.introduction[i18n.language as keyof typeof school.introduction]}
-              </p>
-            </div>
-            <div className="space-y-4">
-              <div className="bg-blue-50 p-4 rounded-lg">
-                <div className="text-2xl font-bold text-blue-600">{school.students_participated}</div>
-                <div className="text-blue-800">Students Participated</div>
+          {/* Introduction and Metrics */}
+          <div className="mb-8">
+            <div className="grid lg:grid-cols-3 gap-8">
+              <div className="lg:col-span-2">
+                <h3 className="text-2xl font-semibold mb-4 text-gray-900">Introduction</h3>
+                <div className="prose prose-lg max-w-none">
+                  <p className="text-gray-600 leading-relaxed text-base">
+                    {school.introduction[i18n.language as keyof typeof school.introduction]}
+                  </p>
+                </div>
               </div>
-              <div className="bg-green-50 p-4 rounded-lg">
-                <div className="text-2xl font-bold text-green-600">{school.bottles_collected.toLocaleString()}</div>
-                <div className="text-green-800">Bottles Collected</div>
+              <div className="space-y-4">
+                <div className="bg-blue-50 p-6 rounded-xl border border-blue-100">
+                  <div className="text-3xl font-bold text-blue-600 mb-1">{school.students_participated}</div>
+                  <div className="text-blue-800 font-medium">Students Participated</div>
+                </div>
+                <div className="bg-green-50 p-6 rounded-xl border border-green-100">
+                  <div className="text-3xl font-bold text-green-600 mb-1">{school.bottles_collected.toLocaleString()}</div>
+                  <div className="text-green-800 font-medium">Bottles Collected</div>
+                </div>
               </div>
             </div>
           </div>
 
-          {school.video_url && (
-            <div className="mb-8">
-              <h3 className="text-2xl font-semibold mb-4">School Video</h3>
-              <div className="aspect-video rounded-lg overflow-hidden">
-                <iframe
-                  src={school.video_url}
-                  className="w-full h-full"
-                  allowFullScreen
-                  title="School video"
-                />
-              </div>
-            </div>
-          )}
-
-          {constructionPhotos.length > 0 && (
-            <div className="mb-8">
-              <h3 className="text-2xl font-semibold mb-4">Construction Work</h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {constructionPhotos.map((photo) => (
-                  <img
-                    key={photo.id}
-                    src={photo.photo_url}
-                    alt="Construction work"
-                    className="w-full h-48 object-cover rounded-lg hover:scale-105 transition-transform duration-300"
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {generalPhotos.length > 0 && (
+          {/* Photo Gallery */}
+          {photos.length > 0 && (
             <div>
-              <h3 className="text-2xl font-semibold mb-4">School Gallery</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {generalPhotos.map((photo) => (
-                  <img
-                    key={photo.id}
-                    src={photo.photo_url}
-                    alt="School activity"
-                    className="w-full h-32 object-cover rounded-lg hover:scale-105 transition-transform duration-300"
-                  />
+              <h3 className="text-2xl font-semibold mb-6 text-gray-900">School Gallery</h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {photos.map((photo) => (
+                  <div key={photo.id} className="group cursor-pointer">
+                    <img
+                      src={photo.photo_url}
+                      alt="School activity"
+                      className="w-full h-32 object-cover rounded-lg hover:scale-105 transition-transform duration-300 shadow-md"
+                    />
+                  </div>
                 ))}
               </div>
             </div>

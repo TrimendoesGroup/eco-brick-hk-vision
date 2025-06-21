@@ -1,10 +1,11 @@
 
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18n";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 import SchoolDetail from "./SchoolDetail";
 
 interface School {
@@ -54,7 +55,7 @@ const Schools = () => {
   };
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-6">{t('schools.title')}</h2>
@@ -62,7 +63,7 @@ const Schools = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {schools.map((school) => (
-            <Card key={school.id} className="group cursor-pointer border-0 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden hover:-translate-y-2">
+            <Card key={school.id} className="group cursor-pointer border-0 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden hover:-translate-y-2 bg-white">
               <div className="relative h-48 overflow-hidden">
                 <img 
                   src={school.banner_image_url}
@@ -73,29 +74,30 @@ const Schools = () => {
                   <img 
                     src={school.logo_url}
                     alt="School logo"
-                    className="w-12 h-12 rounded-full bg-white p-1"
+                    className="w-12 h-12 rounded-full bg-white p-1 shadow-md"
                   />
                 </div>
               </div>
-              <CardContent className="p-6">
+              <CardContent className="p-6 relative">
                 <h3 className="text-xl font-bold text-gray-900 mb-4">
                   {school.name[i18n.language as keyof typeof school.name]}
                 </h3>
-                <div className="space-y-2 mb-4">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Students:</span>
-                    <span className="font-semibold text-blue-600">{school.students_participated}</span>
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div className="text-center p-3 bg-blue-50 rounded-lg">
+                    <div className="text-lg font-bold text-blue-600">{school.students_participated}</div>
+                    <div className="text-xs text-blue-800">Students</div>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Bottles:</span>
-                    <span className="font-semibold text-green-600">{school.bottles_collected.toLocaleString()}</span>
+                  <div className="text-center p-3 bg-green-50 rounded-lg">
+                    <div className="text-lg font-bold text-green-600">{school.bottles_collected.toLocaleString()}</div>
+                    <div className="text-xs text-green-800">Bottles</div>
                   </div>
                 </div>
                 <Button 
                   onClick={() => handleSchoolClick(school)}
-                  className="w-full bg-green-600 hover:bg-green-700"
+                  variant="ghost"
+                  className="absolute bottom-4 right-4 w-10 h-10 p-0 rounded-full bg-green-100 hover:bg-green-200 text-green-600"
                 >
-                  View Details
+                  <ArrowRight className="h-5 w-5" />
                 </Button>
               </CardContent>
             </Card>

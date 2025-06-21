@@ -55,8 +55,12 @@ const Testimonials = () => {
     window.open(videoUrl, '_blank');
   };
 
+  const loadMore = () => {
+    setVisibleCount(prev => Math.min(prev + 6, testimonials.length));
+  };
+
   return (
-    <section id="testimonials" className="py-20 bg-white">
+    <section id="testimonials" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-6">{t('testimonials.title')}</h2>
@@ -111,11 +115,11 @@ const Testimonials = () => {
         {testimonials.length > visibleCount && (
           <div className="text-center mt-12">
             <Button 
-              onClick={() => setVisibleCount(prev => prev + 6)}
+              onClick={loadMore}
               variant="outline"
-              className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white"
+              className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white px-8 py-3"
             >
-              View More
+              {t('testimonials.loadMore', 'Load More')}
             </Button>
           </div>
         )}
