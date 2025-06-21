@@ -75,6 +75,20 @@ const PhotoGallery = () => {
     }
   };
 
+  const getCurrentLanguage = () => {
+    return i18n.language === 'zh' ? 'zh' : 'en';
+  };
+
+  const getPhotoCaption = (photo: Photo) => {
+    const lang = getCurrentLanguage();
+    return photo.caption?.[lang] || '';
+  };
+
+  const getPhotoAlt = (photo: Photo, index: number) => {
+    const caption = getPhotoCaption(photo);
+    return caption || `Photo ${index + 1}`;
+  };
+
   return (
     <section id="gallery" className="py-20 bg-white">
       <div className="container mx-auto px-4">
@@ -92,7 +106,7 @@ const PhotoGallery = () => {
               <div className="aspect-square overflow-hidden">
                 <img 
                   src={photo.photo_url}
-                  alt={photo.caption?.[i18n.language as keyof typeof photo.caption] || `Photo ${index + 1}`}
+                  alt={getPhotoAlt(photo, index)}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                 />
               </div>
@@ -131,14 +145,14 @@ const PhotoGallery = () => {
               
               <img
                 src={allPhotos[selectedPhoto]?.photo_url}
-                alt={allPhotos[selectedPhoto]?.caption?.[i18n.language as keyof typeof allPhotos[selectedPhoto].caption] || 'Photo'}
+                alt={allPhotos[selectedPhoto] ? getPhotoAlt(allPhotos[selectedPhoto], selectedPhoto) : 'Photo'}
                 className="max-w-full max-h-full object-contain"
               />
               
               {allPhotos[selectedPhoto]?.caption && (
                 <div className="absolute bottom-4 left-4 right-4 text-center">
                   <p className="text-white bg-black/50 px-4 py-2 rounded-lg backdrop-blur-sm">
-                    {allPhotos[selectedPhoto].caption?.[i18n.language as keyof typeof allPhotos[selectedPhoto].caption]}
+                    {getPhotoCaption(allPhotos[selectedPhoto])}
                   </p>
                 </div>
               )}
