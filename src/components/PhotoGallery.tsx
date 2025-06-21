@@ -115,12 +115,6 @@ const PhotoGallery = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-6">{t('gallery.title')}</h2>
-          <Button 
-            onClick={openGallery}
-            className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg"
-          >
-            View Photo Gallery
-          </Button>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -152,7 +146,7 @@ const PhotoGallery = () => {
           ))}
         </div>
 
-        {/* Full Screen Gallery */}
+        {/* Full Screen Gallery Popup */}
         {isGalleryOpen && (
           <div className="fixed inset-0 bg-white z-50 overflow-y-auto">
             <div className="container mx-auto px-4 py-8">

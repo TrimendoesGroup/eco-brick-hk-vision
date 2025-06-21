@@ -6,6 +6,7 @@ import About from "@/components/About";
 import Impact from "@/components/Impact";
 import Schools from "@/components/Schools";
 import Gallery from "@/components/Gallery";
+import PhotoGallery from "@/components/PhotoGallery";
 import Testimonials from "@/components/Testimonials";
 import Timeline from "@/components/Timeline";
 import ESGReport from "@/components/ESGReport";
@@ -45,6 +46,7 @@ const Index = () => {
       <Impact />
       <Schools />
       <Gallery />
+      <PhotoGallery />
       <Testimonials />
       <Timeline />
       <ESGReport />
