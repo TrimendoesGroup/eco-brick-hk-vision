@@ -38,7 +38,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-green-50 bg-opacity-30" style={{ backgroundColor: 'rgba(240, 253, 244, 0.3)' }}>
+    <div className="min-h-screen bg-green-50 bg-opacity-30" style={{ backgroundColor: 'rgba(0, 255, 0, 0.3)' }}>
       <Navigation />
       <Hero />
       <About />
