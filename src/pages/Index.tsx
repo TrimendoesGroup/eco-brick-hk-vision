@@ -1,10 +1,10 @@
+
 import { useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Impact from "@/components/Impact";
 import Schools from "@/components/Schools";
-import Gallery from "@/components/Gallery";
 import PhotoGallery from "@/components/PhotoGallery";
 import Testimonials from "@/components/Testimonials";
 import Timeline from "@/components/Timeline";
@@ -38,7 +38,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-green-50 bg-opacity-30" style={{ backgroundColor: 'rgba(240, 253, 244, 0.3)' }}>
       <Navigation />
       <Hero />
       <About />

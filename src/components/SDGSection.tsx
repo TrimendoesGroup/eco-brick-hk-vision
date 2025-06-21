@@ -6,13 +6,48 @@ const SDGSection = () => {
   const { t, i18n } = useTranslation();
 
   const sdgGoals = [
-    { number: 3, title: "Good Health and Well-being", titleZh: "良好健康與福祉" },
-    { number: 4, title: "Quality Education", titleZh: "優質教育" },
-    { number: 6, title: "Clean Water and Sanitation", titleZh: "清潔飲水和衛生設施" },
-    { number: 11, title: "Sustainable Cities and Communities", titleZh: "可持續城市和社區" },
-    { number: 12, title: "Responsible Consumption", titleZh: "負責任消費和生產" },
-    { number: 13, title: "Climate Action", titleZh: "氣候行動" },
-    { number: 17, title: "Partnerships for the Goals", titleZh: "促進目標實現的夥伴關係" }
+    { 
+      number: 3, 
+      title: "Good Health and Well-being", 
+      titleZh: "良好健康與福祉",
+      image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=80&h=80&fit=crop"
+    },
+    { 
+      number: 4, 
+      title: "Quality Education", 
+      titleZh: "優質教育",
+      image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=80&h=80&fit=crop"
+    },
+    { 
+      number: 6, 
+      title: "Clean Water and Sanitation", 
+      titleZh: "清潔飲水和衛生設施",
+      image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=80&h=80&fit=crop"
+    },
+    { 
+      number: 11, 
+      title: "Sustainable Cities and Communities", 
+      titleZh: "可持續城市和社區",
+      image: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=80&h=80&fit=crop"
+    },
+    { 
+      number: 12, 
+      title: "Responsible Consumption", 
+      titleZh: "負責任消費和生產",
+      image: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=80&h=80&fit=crop"
+    },
+    { 
+      number: 13, 
+      title: "Climate Action", 
+      titleZh: "氣候行動",
+      image: "https://images.unsplash.com/photo-1569163139394-de4e4f43e4e3?w=80&h=80&fit=crop"
+    },
+    { 
+      number: 17, 
+      title: "Partnerships for the Goals", 
+      titleZh: "促進目標實現的夥伴關係",
+      image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=80&h=80&fit=crop"
+    }
   ];
 
   return (
@@ -27,9 +62,19 @@ const SDGSection = () => {
           {sdgGoals.map((goal, index) => (
             <Card key={index} className="group cursor-pointer border-blue-200 hover:border-blue-400 transition-all duration-300 hover:shadow-lg">
               <CardContent className="p-4 text-center">
-                <div className="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-blue-500 to-green-500 rounded-full flex items-center justify-center text-white font-bold text-lg group-hover:scale-110 transition-transform duration-300">
-                  {goal.number}
-                </div>
+                {goal.number === 17 ? (
+                  <div className="w-16 h-16 mx-auto mb-3 rounded-full overflow-hidden group-hover:scale-110 transition-transform duration-300">
+                    <img 
+                      src={goal.image} 
+                      alt={i18n.language === 'en' ? goal.title : goal.titleZh}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-blue-500 to-green-500 rounded-full flex items-center justify-center text-white font-bold text-lg group-hover:scale-110 transition-transform duration-300">
+                    {goal.number}
+                  </div>
+                )}
                 <h5 className="text-sm font-semibold text-gray-900 mb-1 leading-tight">
                   {i18n.language === 'en' ? goal.title : goal.titleZh}
                 </h5>
