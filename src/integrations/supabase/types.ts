@@ -9,7 +9,352 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      album_photos: {
+        Row: {
+          album_id: string | null
+          caption: Json | null
+          created_at: string
+          id: string
+          order_index: number
+          photo_url: string
+        }
+        Insert: {
+          album_id?: string | null
+          caption?: Json | null
+          created_at?: string
+          id?: string
+          order_index?: number
+          photo_url: string
+        }
+        Update: {
+          album_id?: string | null
+          caption?: Json | null
+          created_at?: string
+          id?: string
+          order_index?: number
+          photo_url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "album_photos_album_id_fkey"
+            columns: ["album_id"]
+            isOneToOne: false
+            referencedRelation: "photo_albums"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      banners: {
+        Row: {
+          created_at: string
+          description: Json
+          id: string
+          image_url: string
+          is_active: boolean
+          order_index: number
+          subtitle: Json
+          title: Json
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description: Json
+          id?: string
+          image_url: string
+          is_active?: boolean
+          order_index?: number
+          subtitle: Json
+          title: Json
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: Json
+          id?: string
+          image_url?: string
+          is_active?: boolean
+          order_index?: number
+          subtitle?: Json
+          title?: Json
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      esg_report: {
+        Row: {
+          created_at: string
+          highlights: Json
+          id: string
+          metrics: Json
+          report_url: string | null
+          subtitle: Json
+          title: Json
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          highlights: Json
+          id?: string
+          metrics: Json
+          report_url?: string | null
+          subtitle: Json
+          title: Json
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          highlights?: Json
+          id?: string
+          metrics?: Json
+          report_url?: string | null
+          subtitle?: Json
+          title?: Json
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      impact_stats: {
+        Row: {
+          color: string | null
+          created_at: string
+          icon: string | null
+          id: string
+          is_active: boolean
+          order_index: number
+          quantity: number
+          stat_key: string
+          unit: Json
+          updated_at: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          icon?: string | null
+          id?: string
+          is_active?: boolean
+          order_index?: number
+          quantity: number
+          stat_key: string
+          unit: Json
+          updated_at?: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          icon?: string | null
+          id?: string
+          is_active?: boolean
+          order_index?: number
+          quantity?: number
+          stat_key?: string
+          unit?: Json
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      organizations: {
+        Row: {
+          contribution: Json
+          created_at: string
+          id: string
+          is_active: boolean
+          logo_url: string
+          name: Json
+          order_index: number
+          organization_type: string
+          updated_at: string
+          website_url: string | null
+        }
+        Insert: {
+          contribution: Json
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          logo_url: string
+          name: Json
+          order_index?: number
+          organization_type: string
+          updated_at?: string
+          website_url?: string | null
+        }
+        Update: {
+          contribution?: Json
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          logo_url?: string
+          name?: Json
+          order_index?: number
+          organization_type?: string
+          updated_at?: string
+          website_url?: string | null
+        }
+        Relationships: []
+      }
+      photo_albums: {
+        Row: {
+          cover_image_url: string
+          created_at: string
+          id: string
+          is_active: boolean
+          order_index: number
+          subtitle: Json | null
+          title: Json
+          updated_at: string
+        }
+        Insert: {
+          cover_image_url: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          order_index?: number
+          subtitle?: Json | null
+          title: Json
+          updated_at?: string
+        }
+        Update: {
+          cover_image_url?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          order_index?: number
+          subtitle?: Json | null
+          title?: Json
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      school_photos: {
+        Row: {
+          caption: Json | null
+          created_at: string
+          id: string
+          order_index: number
+          photo_type: string
+          photo_url: string
+          school_id: string | null
+        }
+        Insert: {
+          caption?: Json | null
+          created_at?: string
+          id?: string
+          order_index?: number
+          photo_type: string
+          photo_url: string
+          school_id?: string | null
+        }
+        Update: {
+          caption?: Json | null
+          created_at?: string
+          id?: string
+          order_index?: number
+          photo_type?: string
+          photo_url?: string
+          school_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "school_photos_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      schools: {
+        Row: {
+          banner_image_url: string
+          bottles_collected: number
+          created_at: string
+          id: string
+          introduction: Json
+          is_active: boolean
+          logo_url: string
+          name: Json
+          order_index: number
+          recycling_performance: Json | null
+          students_participated: number
+          updated_at: string
+          video_url: string | null
+        }
+        Insert: {
+          banner_image_url: string
+          bottles_collected?: number
+          created_at?: string
+          id?: string
+          introduction: Json
+          is_active?: boolean
+          logo_url: string
+          name: Json
+          order_index?: number
+          recycling_performance?: Json | null
+          students_participated?: number
+          updated_at?: string
+          video_url?: string | null
+        }
+        Update: {
+          banner_image_url?: string
+          bottles_collected?: number
+          created_at?: string
+          id?: string
+          introduction?: Json
+          is_active?: boolean
+          logo_url?: string
+          name?: Json
+          order_index?: number
+          recycling_performance?: Json | null
+          students_participated?: number
+          updated_at?: string
+          video_url?: string | null
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          name: Json
+          order_index: number
+          organization: Json | null
+          quote: Json
+          role: Json
+          testimonial_type: string
+          thumbnail_url: string
+          updated_at: string
+          video_url: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name: Json
+          order_index?: number
+          organization?: Json | null
+          quote: Json
+          role: Json
+          testimonial_type: string
+          thumbnail_url: string
+          updated_at?: string
+          video_url: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name?: Json
+          order_index?: number
+          organization?: Json | null
+          quote?: Json
+          role?: Json
+          testimonial_type?: string
+          thumbnail_url?: string
+          updated_at?: string
+          video_url?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

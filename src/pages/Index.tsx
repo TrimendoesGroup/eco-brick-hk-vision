@@ -4,10 +4,13 @@ import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Impact from "@/components/Impact";
+import Schools from "@/components/Schools";
 import Gallery from "@/components/Gallery";
 import Testimonials from "@/components/Testimonials";
 import Timeline from "@/components/Timeline";
 import ESGReport from "@/components/ESGReport";
+import Organizations from "@/components/Organizations";
+import SDGSection from "@/components/SDGSection";
 import Footer from "@/components/Footer";
 import "@/i18n";
 
@@ -21,7 +24,7 @@ const Index = () => {
         const id = target.getAttribute('href')?.substring(1);
         const element = document.getElementById(id || '');
         if (element) {
-          const offsetTop = element.offsetTop - 80; // Account for fixed nav height
+          const offsetTop = element.offsetTop - 80;
           window.scrollTo({
             top: offsetTop,
             behavior: 'smooth'
@@ -40,10 +43,13 @@ const Index = () => {
       <Hero />
       <About />
       <Impact />
+      <Schools />
       <Gallery />
       <Testimonials />
       <Timeline />
       <ESGReport />
+      <Organizations />
+      <SDGSection />
       <Footer />
     </div>
   );
