@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Card, CardContent } from "@/components/ui/card";
 
 const Timeline = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const timelineEvents = [
     {
@@ -52,6 +52,10 @@ const Timeline = () => {
     }
   ];
 
+  const getCurrentLanguage = () => {
+    return i18n.language === 'zh' ? 'zh' : 'en';
+  };
+
   return (
     <section id="timeline" className="py-20 bg-white">
       <div className="container mx-auto px-4">
@@ -75,16 +79,16 @@ const Timeline = () => {
                         </div>
                         <div>
                           <div className="text-sm text-gray-500 font-medium">
-                            {event.date} • {event.dateZh}
+                            {getCurrentLanguage() === 'zh' ? event.dateZh : event.date}
                           </div>
                           <h3 className="text-xl font-bold text-gray-900">
-                            {event.title}
+                            {getCurrentLanguage() === 'zh' ? event.titleZh : event.title}
                           </h3>
-                          <p className="text-gray-600">{event.titleZh}</p>
                         </div>
                       </div>
-                      <p className="text-gray-700 mb-2">{event.description}</p>
-                      <p className="text-gray-600 text-sm">{event.descriptionZh}</p>
+                      <p className="text-gray-700">
+                        {getCurrentLanguage() === 'zh' ? event.descriptionZh : event.description}
+                      </p>
                     </CardContent>
                   </Card>
                 </div>

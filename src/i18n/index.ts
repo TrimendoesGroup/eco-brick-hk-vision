@@ -79,6 +79,11 @@ const resources = {
         download: "Download Report",
         highlights: "Key Highlights"
       },
+      organizations: {
+        title: "Our Partners & Supporters",
+        partners: "Our Partners",
+        supporters: "Our Supporters"
+      },
       sdg: {
         title: "UN SDG Impact",
         subtitle: "Contributing to Sustainable Development Goals"
@@ -165,6 +170,11 @@ const resources = {
         subtitle: "環境、社會和管治影響評估",
         download: "下載報告",
         highlights: "重點摘要"
+      },
+      organizations: {
+        title: "我們的合作夥伴和支持者",
+        partners: "我們的合作夥伴",
+        supporters: "我們的支持者"
       },
       sdg: {
         title: "聯合國可持續發展目標影響",

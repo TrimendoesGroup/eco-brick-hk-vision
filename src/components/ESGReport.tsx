@@ -59,24 +59,24 @@ const ESGReport = () => {
         {highlights.length > 0 && (
           <div className="mb-16">
             <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">{t('report.highlights')}</h3>
-            <div className="grid lg:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {highlights.map((category, index) => (
-                <Card key={category.id} className="bg-white border-0 shadow-lg">
-                  <CardContent className="p-8">
+                <Card key={category.id} className="bg-white border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
+                  <CardContent className="p-6">
                     <div className="text-center mb-6">
-                      <h4 className="text-2xl font-bold text-gray-900 mb-2">
+                      <h4 className="text-xl font-bold text-gray-900 mb-4">
                         {category.category[i18n.language as keyof typeof category.category]}
                       </h4>
                     </div>
                     <div className="space-y-4">
                       {category.metrics.map((metric, metricIndex) => (
-                        <div key={metricIndex} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                          <div>
-                            <div className="font-semibold text-gray-900">
+                        <div key={metricIndex} className="flex justify-between items-center p-4 bg-gray-50 rounded-lg border border-gray-100">
+                          <div className="flex-1">
+                            <div className="font-semibold text-gray-900 text-sm">
                               {metric.label[i18n.language as keyof typeof metric.label]}
                             </div>
                           </div>
-                          <div className={`text-xl font-bold ${metric.color}`}>
+                          <div className={`text-2xl font-bold ${metric.color} ml-4`}>
                             {metric.value}
                           </div>
                         </div>
