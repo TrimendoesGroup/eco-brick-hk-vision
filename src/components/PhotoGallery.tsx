@@ -10,13 +10,13 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react";
 interface Photo {
   id: string;
   photo_url: string;
-  caption?: { en: string; zh: string };
+  caption?: { en: string; zh: string } | null;
 }
 
 interface Album {
   id: string;
-  name: { en: string; zh: string };
-  description: { en: string; zh: string };
+  name: { en: string; zh: string } | null;
+  description: { en: string; zh: string } | null;
   cover_image_url: string;
   album_photos: Photo[];
 }
@@ -47,9 +47,12 @@ const PhotoGallery = () => {
       
       return albumsData.map(album => ({
         ...album,
-        name: album.name as { en: string; zh: string },
-        description: album.description as { en: string; zh: string },
-        album_photos: album.album_photos || []
+        name: album.name as { en: string; zh: string } | null,
+        description: album.description as { en: string; zh: string } | null,
+        album_photos: (album.album_photos || []).map((photo: any) => ({
+          ...photo,
+          caption: photo.caption as { en: string; zh: string } | null
+        }))
       })) as Album[];
     }
   });
@@ -61,6 +64,16 @@ const PhotoGallery = () => {
   const getPhotoCaption = (photo: Photo) => {
     const lang = getCurrentLanguage();
     return photo.caption?.[lang] || '';
+  };
+
+  const getAlbumName = (album: Album) => {
+    const lang = getCurrentLanguage();
+    return album.name?.[lang] || 'Untitled Album';
+  };
+
+  const getAlbumDescription = (album: Album) => {
+    const lang = getCurrentLanguage();
+    return album.description?.[lang] || '';
   };
 
   const openAlbum = (album: Album) => {
@@ -110,16 +123,16 @@ const PhotoGallery = () => {
               <div className="aspect-[4/3] overflow-hidden">
                 <img 
                   src={album.cover_image_url}
-                  alt={album.name[getCurrentLanguage()]}
+                  alt={getAlbumName(album)}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                 />
               </div>
               <CardContent className="p-6">
                 <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  {album.name[getCurrentLanguage()]}
+                  {getAlbumName(album)}
                 </h3>
                 <p className="text-gray-600 text-sm">
-                  {album.description[getCurrentLanguage()]}
+                  {getAlbumDescription(album)}
                 </p>
                 <div className="mt-3 text-sm text-green-600 font-medium">
                   {album.album_photos.length} photos
@@ -136,10 +149,10 @@ const PhotoGallery = () => {
               <div className="flex justify-between items-center mb-8">
                 <div>
                   <h2 className="text-3xl font-bold text-gray-900 mb-2">
-                    {selectedAlbum.name[getCurrentLanguage()]}
+                    {getAlbumName(selectedAlbum)}
                   </h2>
                   <p className="text-gray-600">
-                    {selectedAlbum.description[getCurrentLanguage()]}
+                    {getAlbumDescription(selectedAlbum)}
                   </p>
                 </div>
                 <Button
