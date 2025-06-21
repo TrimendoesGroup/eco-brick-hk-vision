@@ -80,6 +80,36 @@ export type Database = {
         }
         Relationships: []
       }
+      esg_highlights: {
+        Row: {
+          category: Json
+          created_at: string
+          id: string
+          is_active: boolean
+          metrics: Json
+          order_index: number
+          updated_at: string
+        }
+        Insert: {
+          category: Json
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          metrics: Json
+          order_index?: number
+          updated_at?: string
+        }
+        Update: {
+          category?: Json
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          metrics?: Json
+          order_index?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       esg_report: {
         Row: {
           created_at: string
